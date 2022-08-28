@@ -18,18 +18,41 @@ class MyGUI(QMainWindow):
         self.actionOpen.triggered.connect(self.open_file)
         self.actionSave_As.triggered.connect(self.save_file_as)
 
+        self.actionUndo.triggered.connect(self.undo)
+        self.actionRedo.triggered.connect(self.redo)
+        self.actionCopy.triggered.connect(self.copy)
+        self.actionCut.triggered.connect(self.cut)
+        self.actionPaste.triggered.connect(self.paste)
+
     def change_font_size(self, size):
         self.plainTextEdit.setFont(QFont("Courier New", size))
 
+    def undo(self):
+        self.plainTextEdit.undo()
+
+    def redo(self):
+        self.plainTextEdit.redo()
+
+    def copy(self):
+        self.plainTextEdit.copy()
+
+    def cut(self):
+        self.plainTextEdit.cut()
+
+    def paste(self):
+        self.plainTextEdit.paste()
     def open_file(self):
         options = QFileDialog.Options()
-        filename, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Text Files (*.txt);; Python Files(*.py)",
+        filename, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Text Files (*.txt);; Word Doc (*.docx);; "
+                                                                         "Python Files(*.py);; All Files (*)",
                                                   options=options)
         if filename != "":
             with open(filename, "r") as f:
                 self.plainTextEdit.setPlainText(f.read())
+                self.filename = filename
 
     ## Need to implement save (overwrite) function to save a file over itself with updates.
+   # def save_file(self):
 
     def save_file_as(self):
         options = QFileDialog.Options()
@@ -38,6 +61,21 @@ class MyGUI(QMainWindow):
         if filename != "":
             with open(filename, "w") as f:
                 f.write(self.plainTextEdit.toPlainText())
+
+
+    def closeEvent(self, event):
+        dialog = QMessageBox()
+        dialog.setText("Do you want to save your work?")
+        dialog.addButton(QPushButton("Yes"), QMessageBox.YesRole)  # 0
+        dialog.addButton(QPushButton("No"), QMessageBox.NoRole)  # 1
+        dialog.addButton(QPushButton("Cancel"), QMessageBox.RejectRole)  # 2
+
+        answer = dialog.exec_()
+        if answer == 0:
+            self.save_file()
+            event.accept()
+        elif answer == 2:
+            event.ignore()
 
 def main():
     app = QApplication([])
