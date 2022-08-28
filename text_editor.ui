@@ -16,7 +16,11 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QPlainTextEdit" name="plainTextEdit"/>
+     <widget class="QPlainTextEdit" name="plainTextEdit">
+      <property name="lineWrapMode">
+       <enum>QPlainTextEdit::WidgetWidth</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -137,7 +141,6 @@
     <string>Cut</string>
    </property>
   </action>
-
   <action name="action12pt">
    <property name="text">
     <string>12pt</string>
@@ -187,3 +190,4 @@
  <resources/>
  <connections/>
 </ui>
+
