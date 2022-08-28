@@ -17,6 +17,7 @@ class MyGUI(QMainWindow):
 
         self.actionOpen.triggered.connect(self.open_file)
         self.actionSave_As.triggered.connect(self.save_file_as)
+        self.actionClose.triggered.connect(self.close)
 
         self.actionUndo.triggered.connect(self.undo)
         self.actionRedo.triggered.connect(self.redo)
