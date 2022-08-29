@@ -8,6 +8,9 @@ class MyGUI(QMainWindow):
         super(MyGUI, self).__init__()
         uic.loadUi('text_editor.ui', self)
         self.show()
+        self.filename = "New File"
+
+        self.file_name_set = False
 
         self.setWindowTitle("3writes")
         self.action12pt.triggered.connect(lambda: self.change_font_size(12))
@@ -15,8 +18,10 @@ class MyGUI(QMainWindow):
         self.action24pt.triggered.connect(lambda: self.change_font_size(24))
         self.action32pt.triggered.connect(lambda: self.change_font_size(32))
 
+        self.actionNew.triggered.connect(self.new_file)
         self.actionOpen.triggered.connect(self.open_file)
         self.actionSave_As.triggered.connect(self.save_file_as)
+        self.actionSave.triggered.connect(self.save_file)
         self.actionClose.triggered.connect(self.close)
 
         self.actionUndo.triggered.connect(self.undo)
@@ -42,6 +47,24 @@ class MyGUI(QMainWindow):
 
     def paste(self):
         self.plainTextEdit.paste()
+
+    def new_file(self, event):
+        dialog = QMessageBox()
+        dialog.setText("Do you want to save your work?")
+        dialog.addButton(QPushButton("Yes"), QMessageBox.YesRole)  # 0
+        dialog.addButton(QPushButton("No"), QMessageBox.NoRole)  # 1
+        dialog.addButton(QPushButton("Cancel"), QMessageBox.RejectRole)  # 2
+
+        answer = dialog.exec_()
+        if answer == 0: # if yes is clicked
+            self.save_file_as() # saves file
+        elif answer == 2: # if cancel is clicked
+            dialog.close() # close dialog box
+            return 0 # return 0, so clear() func below is not triggered
+
+        self.plainTextEdit.clear() # after file is saved, or not, text window is cleared
+        self.filename = "New File"
+
     def open_file(self):
         options = QFileDialog.Options()
         filename, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Text Files (*.txt);; Word Doc (*.docx);; "
@@ -50,10 +73,8 @@ class MyGUI(QMainWindow):
         if filename != "":
             with open(filename, "r") as f:
                 self.plainTextEdit.setPlainText(f.read())
-                self.filename = filename
-
-    ## Need to implement save (overwrite) function to save a file over itself with updates.
-   # def save_file(self):
+                self.fi = QFile
+                self.file_name_set = True
 
     def save_file_as(self):
         options = QFileDialog.Options()
@@ -62,6 +83,16 @@ class MyGUI(QMainWindow):
         if filename != "":
             with open(filename, "w") as f:
                 f.write(self.plainTextEdit.toPlainText())
+                self.filename = QFileDialog.getOpenFileName()
+                self.file_name_set = True
+
+    def save_file(self):
+        if self.file_name_set:
+
+            with open(self.filename, "w") as f:
+                f.write(self.plainTextEdit.toPlainText())
+        else:
+            self.save_file_as()
 
 
     def closeEvent(self, event):
@@ -73,7 +104,7 @@ class MyGUI(QMainWindow):
 
         answer = dialog.exec_()
         if answer == 0:
-            self.save_file()
+            self.save_file_as()
             event.accept()
         elif answer == 2:
             event.ignore()
