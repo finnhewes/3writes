@@ -8,9 +8,11 @@ class MyGUI(QMainWindow):
         super(MyGUI, self).__init__()
         uic.loadUi('text_editor.ui', self)
         self.show()
-        self.filename = "New File"
 
+        self.filename = ""
         self.file_name_set = False
+
+        self.plainTextEdit.setFont(QFont("Courier New", 16))
 
         self.setWindowTitle("3writes")
         self.action12pt.triggered.connect(lambda: self.change_font_size(12))
@@ -63,39 +65,9 @@ class MyGUI(QMainWindow):
             return 0 # return 0, so clear() func below is not triggered
 
         self.plainTextEdit.clear() # after file is saved, or not, text window is cleared
-        self.filename = "New File"
+        self.filename = ""
 
     def open_file(self):
-        options = QFileDialog.Options()
-        filename, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Text Files (*.txt);; Word Doc (*.docx);; "
-                                                                         "Python Files(*.py);; All Files (*)",
-                                                  options=options)
-        if filename != "":
-            with open(filename, "r") as f:
-                self.plainTextEdit.setPlainText(f.read())
-                self.fi = QFile
-                self.file_name_set = True
-
-    def save_file_as(self):
-        options = QFileDialog.Options()
-        filename, _ = QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);; Word Doc (*.docx);; All Files(*)",
-                                                  options=options)
-        if filename != "":
-            with open(filename, "w") as f:
-                f.write(self.plainTextEdit.toPlainText())
-                self.filename = QFileDialog.getOpenFileName()
-                self.file_name_set = True
-
-    def save_file(self):
-        if self.file_name_set:
-
-            with open(self.filename, "w") as f:
-                f.write(self.plainTextEdit.toPlainText())
-        else:
-            self.save_file_as()
-
-
-    def closeEvent(self, event):
         dialog = QMessageBox()
         dialog.setText("Do you want to save your work?")
         dialog.addButton(QPushButton("Yes"), QMessageBox.YesRole)  # 0
@@ -103,10 +75,49 @@ class MyGUI(QMainWindow):
         dialog.addButton(QPushButton("Cancel"), QMessageBox.RejectRole)  # 2
 
         answer = dialog.exec_()
-        if answer == 0:
-            self.save_file_as()
+        if answer == 0: # if yes is clicked
+            self.save_file_as() # saves file
+        elif answer == 2: # if cancel is clicked
+            dialog.close() # close dialog box
+            return 0 # return 0, so clear() func below is not triggered
+
+        options = QFileDialog.Options()  # default
+        self.filename, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Text Files (*.txt);; Word Doc (*.docx);; "
+                                                                         "Python Files(*.py);; All Files (*)",
+                                                  options=options)
+        if self.filename != "":  # basically, if an actual file is selected
+            with open(self.filename, "r") as f:
+                self.plainTextEdit.setPlainText(f.read())  # set contents of text window to file contents
+                self.file_name_set = True  # used in save logic
+
+    def save_file_as(self):
+        options = QFileDialog.Options()  # default
+        self.filename, _ = QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);; Word Doc (*.docx);; All Files(*)",
+                                                  options=options)
+        if self.filename != "":  # basically, if an actual file is selected
+            with open(self.filename, "w") as f:
+                f.write(self.plainTextEdit.toPlainText())  # set file contents to contents of text window
+                self.file_name_set = True  # used in save logic
+
+    def save_file(self):
+        if self.file_name_set:  # meaning, if a file has been opened, or "saved as", and is therefore NOT a new file
+            with open(self.filename, "w") as f:
+                f.write(self.plainTextEdit.toPlainText())  # overwrite file contents with contents of the text window
+        else:  # meaning a file has not been opened or saved as... NEW files!
+            self.save_file_as()  # redirect to save as func
+
+    def closeEvent(self, event):  # used when exiting window
+        dialog = QMessageBox()
+        dialog.setText("Do you want to save your work?")
+        dialog.addButton(QPushButton("Yes"), QMessageBox.YesRole)  # 0
+        dialog.addButton(QPushButton("No"), QMessageBox.NoRole)  # 1
+        dialog.addButton(QPushButton("Cancel"), QMessageBox.RejectRole)  # 2
+
+        answer = dialog.exec_()
+        if answer == 0:  # yes
+            self.save_file_as()  # save file as
             event.accept()
-        elif answer == 2:
+        elif answer == 2:  # cancel, return to work.
             event.ignore()
 
 def main():
