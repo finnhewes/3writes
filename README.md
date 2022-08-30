@@ -17,7 +17,7 @@ ________________________________________________________
 
 
 Coming soon:
-    Word count functionality
+    Word count functionality,
     Shortcut keys
     
 And not much more!
