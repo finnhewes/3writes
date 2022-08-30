@@ -62,10 +62,15 @@
       <string>Theme</string>
      </property>
      <addaction name="actionLight"/>
+     <addaction name="actionSilverfox"/>
      <addaction name="actionDark"/>
      <addaction name="actionMatrix"/>
+     <addaction name="actionBeach_Boi"/>
+     <addaction name="actionChickadee"/>
      <addaction name="actionBlack_Gold"/>
-     <addaction name="actionMurica"/>
+     <addaction name="actionPink"/>
+     <addaction name="actionSlate"/>
+     <addaction name="actionWheat"/>
     </widget>
     <addaction name="menuFont_Size"/>
     <addaction name="menuTheme"/>
@@ -178,15 +183,41 @@
   </action>
   <action name="actionBlack_Gold">
    <property name="text">
-    <string>Black/Gold</string>
+    <string>Black n Gold</string>s
    </property>
   </action>
-  <action name="actionMurica">
+  <action name="actionBeach_Boi">
    <property name="text">
-    <string>Murica</string>
+    <string>Beach Boi</string>
+   </property>
+  </action>
+  <action name="actionChickadee">
+   <property name="text">
+    <string>Chickadee</string>
+   </property>
+  </action>
+  <action name="actionPink">
+   <property name="text">
+    <string>Pink</string>
+   </property>
+  </action>
+  <action name="actionSlate">
+   <property name="text">
+    <string>Slate</string>
+   </property>
+  </action>
+  <action name="actionWheat">
+   <property name="text">
+    <string>Wheat</string>
+   </property>
+  </action>
+  <action name="actionSilverfox">
+   <property name="text">
+    <string>Silver Fox</string>
    </property>
   </action>
  </widget>
  <resources/>
  <connections/>
 </ui>
+
