@@ -79,6 +79,7 @@
     <property name="title">
      <string>Edit</string>
     </property>
+    <addaction name="actionSelectAll"/>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -119,6 +120,11 @@
   <action name="actionExit_Program">
    <property name="text">
     <string>Exit Program</string>
+   </property>
+  </action>
+  <action name="actionSelectAll">
+   <property name="text">
+    <string>Select All</string>
    </property>
   </action>
   <action name="actionUndo">
