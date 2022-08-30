@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont
 from PyQt5 import uic
+from PyQt5.QtWidgets import QStyleFactory
 
 class MyGUI(QMainWindow):
 
@@ -13,6 +14,7 @@ class MyGUI(QMainWindow):
         self.file_name_set = False
 
         self.plainTextEdit.setFont(QFont("Courier New", 16))
+        self.set_light_theme()
 
         self.setWindowTitle("3writes")
         self.action12pt.triggered.connect(lambda: self.change_font_size(12))
@@ -31,6 +33,17 @@ class MyGUI(QMainWindow):
         self.actionCopy.triggered.connect(self.copy)
         self.actionCut.triggered.connect(self.cut)
         self.actionPaste.triggered.connect(self.paste)
+
+        self.actionLight.triggered.connect(self.set_light_theme)
+        self.actionDark.triggered.connect(self.set_dark_theme)
+        self.actionMatrix.triggered.connect(self.set_matrix_theme)
+        self.actionBlack_Gold.triggered.connect(self.set_black_gold_theme)
+        self.actionBeach_Boi.triggered.connect(self.set_beach_boi_theme)
+        self.actionChickadee.triggered.connect(self.set_chickadee_theme)
+        self.actionPink.triggered.connect(self.set_pink_theme)
+        self.actionSlate.triggered.connect(self.set_slate_theme)
+        self.actionWheat.triggered.connect(self.set_wheat_theme)
+        self.actionSilverfox.triggered.connect(self.set_silverfox_theme)
 
     def change_font_size(self, size):
         self.plainTextEdit.setFont(QFont("Courier New", size))
@@ -66,6 +79,7 @@ class MyGUI(QMainWindow):
 
         self.plainTextEdit.clear() # after file is saved, or not, text window is cleared
         self.filename = ""
+        self.file_name_set = False
 
     def open_file(self):
         dialog = QMessageBox()
@@ -119,6 +133,56 @@ class MyGUI(QMainWindow):
             event.accept()
         elif answer == 2:  # cancel, return to work.
             event.ignore()
+
+    def set_light_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: white;")
+        self.plainTextEdit.setStyleSheet("color: black;")
+        self.setStyleSheet("background-color: white;")
+
+    def set_dark_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: #00000080;")
+        self.plainTextEdit.setStyleSheet("color: whitesmoke;")
+        self.setStyleSheet("background-color: #00000080;")
+
+    def set_matrix_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: black;")
+        self.plainTextEdit.setStyleSheet("color: lawngreen;")
+        self.setStyleSheet("background-color: black;")
+
+    def set_black_gold_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: black;")
+        self.plainTextEdit.setStyleSheet("color: gold;")
+        self.setStyleSheet("background-color: black;")
+
+    def set_beach_boi_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: papayawhip;")
+        self.plainTextEdit.setStyleSheet("color: lightseagreen;")
+        self.setStyleSheet("background-color: papayawhip;")
+
+    def set_chickadee_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: lavenderblush;")
+        self.plainTextEdit.setStyleSheet("color: mediumslateblue;")
+        self.setStyleSheet("background-color: lavenderblush;")
+
+    def set_pink_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: pink;")
+        self.plainTextEdit.setStyleSheet("color: palevioletred;")
+        self.setStyleSheet("background-color: pink;")
+
+    def set_slate_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: slategray;")
+        self.plainTextEdit.setStyleSheet("color: paleturquoise;")
+        self.setStyleSheet("background-color: slategray;")
+
+    def set_wheat_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: wheat;")
+        self.plainTextEdit.setStyleSheet("color: darkgoldenrod;")
+        self.setStyleSheet("background-color: wheat;")
+
+    def set_silverfox_theme(self):
+        self.plainTextEdit.setStyleSheet("background-color: silver;")
+        self.plainTextEdit.setStyleSheet("color: whitesmoke;")
+        self.setStyleSheet("background-color: silver;")
 
 def main():
     app = QApplication([])
