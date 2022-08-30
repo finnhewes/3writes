@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QKeySequence
 from PyQt5 import uic
 from PyQt5.QtWidgets import QStyleFactory
 
@@ -23,16 +23,26 @@ class MyGUI(QMainWindow):
         self.action32pt.triggered.connect(lambda: self.change_font_size(32))
 
         self.actionNew.triggered.connect(self.new_file)
+        self.actionNew.setShortcut(QKeySequence("Ctrl+N"))
         self.actionOpen.triggered.connect(self.open_file)
+        self.actionOpen.setShortcut(QKeySequence("Ctrl+O"))
         self.actionSave_As.triggered.connect(self.save_file_as)
         self.actionSave.triggered.connect(self.save_file)
+        self.actionSave.setShortcut(QKeySequence("Ctrl+S"))
         self.actionClose.triggered.connect(self.close)
 
+        self.actionSelectAll.triggered.connect(self.select_all)
+        self.actionSelectAll.setShortcut(QKeySequence("Ctrl+A"))
         self.actionUndo.triggered.connect(self.undo)
+        self.actionUndo.setShortcut(QKeySequence("Ctrl+U"))
         self.actionRedo.triggered.connect(self.redo)
+        self.actionRedo.setShortcut(QKeySequence("Ctrl+R"))
         self.actionCopy.triggered.connect(self.copy)
+        self.actionCopy.setShortcut(QKeySequence("Ctrl+C"))
         self.actionCut.triggered.connect(self.cut)
+        self.actionCut.setShortcut(QKeySequence("Ctrl+X"))
         self.actionPaste.triggered.connect(self.paste)
+        self.actionPaste.setShortcut(QKeySequence("Ctrl+V"))
 
         self.actionLight.triggered.connect(self.set_light_theme)
         self.actionDark.triggered.connect(self.set_dark_theme)
@@ -47,6 +57,9 @@ class MyGUI(QMainWindow):
 
     def change_font_size(self, size):
         self.plainTextEdit.setFont(QFont("Courier New", size))
+
+    def select_all(self):
+        self.plainTextEdit.selectAll()
 
     def undo(self):
         self.plainTextEdit.undo()
@@ -192,3 +205,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
