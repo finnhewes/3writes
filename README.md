@@ -11,6 +11,8 @@ One font to choose from, in four different sizes.
 
 Create, Open, Manipulate, and Save plaintext files without any distracting clutter.
 
+Word count is tracked in the status bar!
+
 Select All, Undo, Redo, Copy, Cut, Paste functions included (free!)
 
 Shortcut Keys Included!
@@ -27,6 +29,6 @@ ________________________________________________________
 
 
 Coming soon:
-    Word count functionality & status bar
+User defined default theme selection (selected from list of premade options)
     
 And not much more!
