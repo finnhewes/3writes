@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont, QKeySequence
 from PyQt5 import uic
-from PyQt5.QtWidgets import QStyleFactory
 
 class MyGUI(QMainWindow):
 
@@ -15,8 +14,12 @@ class MyGUI(QMainWindow):
 
         self.plainTextEdit.setFont(QFont("Courier New", 16))
         self.set_light_theme()
+        self.word_count = 0
 
         self.setWindowTitle("3writes")
+        QMainWindow.setStatusBar(self, self.statusbar)
+        self.statusbar.showMessage(f"Word Count: {self.word_count}")
+
         self.action12pt.triggered.connect(lambda: self.change_font_size(12))
         self.action16pt.triggered.connect(lambda: self.change_font_size(16))
         self.action24pt.triggered.connect(lambda: self.change_font_size(24))
@@ -54,6 +57,9 @@ class MyGUI(QMainWindow):
         self.actionSlate.triggered.connect(self.set_slate_theme)
         self.actionWheat.triggered.connect(self.set_wheat_theme)
         self.actionSilverfox.triggered.connect(self.set_silverfox_theme)
+
+    def update_word_count(self):
+        self.statusbar.showMessage(f"Word Count: {self.word_count}")
 
     def change_font_size(self, size):
         self.plainTextEdit.setFont(QFont("Courier New", size))
@@ -151,51 +157,61 @@ class MyGUI(QMainWindow):
         self.plainTextEdit.setStyleSheet("background-color: white;")
         self.plainTextEdit.setStyleSheet("color: black;")
         self.setStyleSheet("background-color: white;")
+        self.statusbar.setStyleSheet("color: black;")
 
     def set_dark_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: #00000080;")
         self.plainTextEdit.setStyleSheet("color: whitesmoke;")
         self.setStyleSheet("background-color: #00000080;")
+        self.statusbar.setStyleSheet("color: whitesmoke;")
 
     def set_matrix_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: black;")
         self.plainTextEdit.setStyleSheet("color: lawngreen;")
         self.setStyleSheet("background-color: black;")
+        self.statusbar.setStyleSheet("color: lawngreen;")
 
     def set_black_gold_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: black;")
         self.plainTextEdit.setStyleSheet("color: gold;")
         self.setStyleSheet("background-color: black;")
+        self.statusbar.setStyleSheet("color: gold;")
 
     def set_beach_boi_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: papayawhip;")
         self.plainTextEdit.setStyleSheet("color: lightseagreen;")
         self.setStyleSheet("background-color: papayawhip;")
+        self.statusbar.setStyleSheet("color: lightseagreen;")
 
     def set_chickadee_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: lavenderblush;")
         self.plainTextEdit.setStyleSheet("color: mediumslateblue;")
         self.setStyleSheet("background-color: lavenderblush;")
+        self.statusbar.setStyleSheet("color: mediumslateblue;")
 
     def set_pink_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: pink;")
         self.plainTextEdit.setStyleSheet("color: palevioletred;")
         self.setStyleSheet("background-color: pink;")
+        self.statusbar.setStyleSheet("color: palevioletred;")
 
     def set_slate_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: slategray;")
         self.plainTextEdit.setStyleSheet("color: paleturquoise;")
         self.setStyleSheet("background-color: slategray;")
+        self.statusbar.setStyleSheet("color: paleturquoise;")
 
     def set_wheat_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: wheat;")
         self.plainTextEdit.setStyleSheet("color: darkgoldenrod;")
         self.setStyleSheet("background-color: wheat;")
+        self.statusbar.setStyleSheet("color: darkgoldenrod;")
 
     def set_silverfox_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: silver;")
         self.plainTextEdit.setStyleSheet("color: whitesmoke;")
         self.setStyleSheet("background-color: silver;")
+        self.statusbar.setStyleSheet("color: whitesmoke;")
 
 def main():
     app = QApplication([])
@@ -205,4 +221,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
