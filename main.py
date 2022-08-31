@@ -8,23 +8,25 @@ class MyGUI(QMainWindow):
         super(MyGUI, self).__init__()
         uic.loadUi('text_editor.ui', self)
         self.show()
-
+        self.setWindowTitle("3writes")
         self.filename = ""
         self.file_name_set = False
 
-        self.plainTextEdit.setFont(QFont("Courier New", 16))
-        self.set_light_theme()
-        self.word_count = 0
+        self.plainTextEdit.setFont(QFont("Courier New", 16))  # default font settings
+        self.set_light_theme()  # light is the default theme
+        self.word_count = 0 # word count starts at 0
+        QMainWindow.setStatusBar(self, self.statusbar)  # generating a status bar in the window
+        self.statusbar.showMessage(f"Word Count: {self.word_count}")  # giving the status bar a purpose
+        self.plainTextEdit.textChanged.connect(self.update_word_count)  #whenever the text content of the document is
+        # changed [[signal generated]], update_word_count() is triggered [[slot fires]]
 
-        self.setWindowTitle("3writes")
-        QMainWindow.setStatusBar(self, self.statusbar)
-        self.statusbar.showMessage(f"Word Count: {self.word_count}")
-
+        # changing font sizes
         self.action12pt.triggered.connect(lambda: self.change_font_size(12))
         self.action16pt.triggered.connect(lambda: self.change_font_size(16))
         self.action24pt.triggered.connect(lambda: self.change_font_size(24))
         self.action32pt.triggered.connect(lambda: self.change_font_size(32))
 
+        # file menu options and shortcut keys
         self.actionNew.triggered.connect(self.new_file)
         self.actionNew.setShortcut(QKeySequence("Ctrl+N"))
         self.actionOpen.triggered.connect(self.open_file)
@@ -34,6 +36,7 @@ class MyGUI(QMainWindow):
         self.actionSave.setShortcut(QKeySequence("Ctrl+S"))
         self.actionClose.triggered.connect(self.close)
 
+        # edit menu options and shortcut keys
         self.actionSelectAll.triggered.connect(self.select_all)
         self.actionSelectAll.setShortcut(QKeySequence("Ctrl+A"))
         self.actionUndo.triggered.connect(self.undo)
@@ -47,6 +50,7 @@ class MyGUI(QMainWindow):
         self.actionPaste.triggered.connect(self.paste)
         self.actionPaste.setShortcut(QKeySequence("Ctrl+V"))
 
+        # theme menu options
         self.actionLight.triggered.connect(self.set_light_theme)
         self.actionDark.triggered.connect(self.set_dark_theme)
         self.actionMatrix.triggered.connect(self.set_matrix_theme)
@@ -58,8 +62,11 @@ class MyGUI(QMainWindow):
         self.actionWheat.triggered.connect(self.set_wheat_theme)
         self.actionSilverfox.triggered.connect(self.set_silverfox_theme)
 
-    def update_word_count(self):
-        self.statusbar.showMessage(f"Word Count: {self.word_count}")
+    def update_word_count(self):  # function to count words in document
+        text = self.plainTextEdit.toPlainText()  # text is retrieved from the document contents
+        self.word_count = len(text.split())  # split text into individual words, using spaces as the default separator.
+        # self.word_count is then updated to the length of this split list.
+        self.statusbar.showMessage(f"Word Count: {self.word_count}")  # status bar is updated with new self.word count
 
     def change_font_size(self, size):
         self.plainTextEdit.setFont(QFont("Courier New", size))
@@ -88,8 +95,8 @@ class MyGUI(QMainWindow):
         dialog.addButton(QPushButton("Yes"), QMessageBox.YesRole)  # 0
         dialog.addButton(QPushButton("No"), QMessageBox.NoRole)  # 1
         dialog.addButton(QPushButton("Cancel"), QMessageBox.RejectRole)  # 2
-
         answer = dialog.exec_()
+
         if answer == 0: # if yes is clicked
             self.save_file_as() # saves file
         elif answer == 2: # if cancel is clicked
@@ -97,8 +104,10 @@ class MyGUI(QMainWindow):
             return 0 # return 0, so clear() func below is not triggered
 
         self.plainTextEdit.clear() # after file is saved, or not, text window is cleared
-        self.filename = ""
-        self.file_name_set = False
+        self.filename = ""  # reset self.filename
+        self.plainTextEdit.setDocumentTitle(self.filename)  # set document title to self.filename
+        self.word_count = 0  # reset word count to zero
+        self.file_name_set = False  # set file name to false
 
     def open_file(self):
         dialog = QMessageBox()
@@ -106,8 +115,8 @@ class MyGUI(QMainWindow):
         dialog.addButton(QPushButton("Yes"), QMessageBox.YesRole)  # 0
         dialog.addButton(QPushButton("No"), QMessageBox.NoRole)  # 1
         dialog.addButton(QPushButton("Cancel"), QMessageBox.RejectRole)  # 2
-
         answer = dialog.exec_()
+
         if answer == 0: # if yes is clicked
             self.save_file_as() # saves file
         elif answer == 2: # if cancel is clicked
@@ -115,21 +124,24 @@ class MyGUI(QMainWindow):
             return 0 # return 0, so clear() func below is not triggered
 
         options = QFileDialog.Options()  # default
-        self.filename, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Text Files (*.txt);; Word Doc (*.docx);; "
-                                                                         "Python Files(*.py);; All Files (*)",
+        self.filename, _ = QFileDialog.getOpenFileName(self, "Open File", "", "Text Files (*.txt);; Word Doc (*.docx);;"
+                                                                         " Python Files(*.py);; All Files (*)",
                                                   options=options)
         if self.filename != "":  # basically, if an actual file is selected
             with open(self.filename, "r") as f:
                 self.plainTextEdit.setPlainText(f.read())  # set contents of text window to file contents
+                self.plainTextEdit.setDocumentTitle(self.filename)  # set document title to self.filename
                 self.file_name_set = True  # used in save logic
 
     def save_file_as(self):
         options = QFileDialog.Options()  # default
-        self.filename, _ = QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);; Word Doc (*.docx);; All Files(*)",
+        self.filename, _ = QFileDialog.getSaveFileName(self, "Save File", "", "Text Files (*.txt);; Word Doc (*.docx);;"
+                                                                              " All Files(*)",
                                                   options=options)
         if self.filename != "":  # basically, if an actual file is selected
             with open(self.filename, "w") as f:
                 f.write(self.plainTextEdit.toPlainText())  # set file contents to contents of text window
+                self.plainTextEdit.setDocumentTitle(self.filename)  # set document title to self.filename
                 self.file_name_set = True  # used in save logic
 
     def save_file(self):
@@ -152,6 +164,8 @@ class MyGUI(QMainWindow):
             event.accept()
         elif answer == 2:  # cancel, return to work.
             event.ignore()
+
+    #_______________________Themes Below__________________________#
 
     def set_light_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: white;")
@@ -213,6 +227,7 @@ class MyGUI(QMainWindow):
         self.setStyleSheet("background-color: silver;")
         self.statusbar.setStyleSheet("color: whitesmoke;")
 
+# Tie it all together!
 def main():
     app = QApplication([])
     window=MyGUI()
@@ -221,3 +236,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
