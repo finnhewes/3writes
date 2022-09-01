@@ -29,7 +29,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>802</width>
+     <width>1200</width>
      <height>24</height>
     </rect>
    </property>
@@ -61,16 +61,96 @@
      <property name="title">
       <string>Theme</string>
      </property>
-     <addaction name="actionLight"/>
-     <addaction name="actionSilverfox"/>
-     <addaction name="actionDark"/>
-     <addaction name="actionMatrix"/>
-     <addaction name="actionBeach_Boi"/>
-     <addaction name="actionChickadee"/>
-     <addaction name="actionBlack_Gold"/>
-     <addaction name="actionPink"/>
-     <addaction name="actionSlate"/>
-     <addaction name="actionWheat"/>
+     <widget class="QMenu" name="menuLight">
+      <property name="title">
+       <string>Light</string>
+      </property>
+      <addaction name="actionSelect"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default"/>
+     </widget>
+     <widget class="QMenu" name="menuSilver_Fox">
+      <property name="title">
+       <string>Silver Fox</string>
+      </property>
+      <addaction name="actionSelect_2"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default_2"/>
+     </widget>
+     <widget class="QMenu" name="menuDark">
+      <property name="title">
+       <string>Dark</string>
+      </property>
+      <addaction name="actionSelect_3"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default_3"/>
+     </widget>
+     <widget class="QMenu" name="menuMatrix">
+      <property name="title">
+       <string>Matrix</string>
+      </property>
+      <addaction name="actionSelect_4"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default_4"/>
+     </widget>
+     <widget class="QMenu" name="menuBeach_Boi">
+      <property name="title">
+       <string>Beach Boi</string>
+      </property>
+      <addaction name="actionSelect_5"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default_5"/>
+     </widget>
+     <widget class="QMenu" name="menuChickadee">
+      <property name="title">
+       <string>Chickadee</string>
+      </property>
+      <addaction name="actionSelect_6"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default_6"/>
+     </widget>
+     <widget class="QMenu" name="menuBlack_n_Gold">
+      <property name="title">
+       <string>Black n Gold</string>
+      </property>
+      <addaction name="actionSelect_7"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default_7"/>
+     </widget>
+     <widget class="QMenu" name="menuPink">
+      <property name="title">
+       <string>Pink</string>
+      </property>
+      <addaction name="actionSelect_8"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default_8"/>
+     </widget>
+     <widget class="QMenu" name="menuSlate">
+      <property name="title">
+       <string>Slate</string>
+      </property>
+      <addaction name="actionSelect_9"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default_9"/>
+     </widget>
+     <widget class="QMenu" name="menuWheat">
+      <property name="title">
+       <string>Wheat</string>
+      </property>
+      <addaction name="actionSelect_10"/>
+      <addaction name="separator"/>
+      <addaction name="actionSet_as_Default_10"/>
+     </widget>
+     <addaction name="menuLight"/>
+     <addaction name="menuSilver_Fox"/>
+     <addaction name="menuDark"/>
+     <addaction name="menuMatrix"/>
+     <addaction name="menuBeach_Boi"/>
+     <addaction name="menuChickadee"/>
+     <addaction name="menuBlack_n_Gold"/>
+     <addaction name="menuPink"/>
+     <addaction name="menuSlate"/>
+     <addaction name="menuWheat"/>
     </widget>
     <addaction name="menuFont_Size"/>
     <addaction name="menuTheme"/>
@@ -172,54 +252,104 @@
     <string>32pt</string>
    </property>
   </action>
-  <action name="actionLight">
+  <action name="actionSet_as_Default">
    <property name="text">
-    <string>Light</string>
+    <string>Set as Default</string>
    </property>
   </action>
-  <action name="actionDark">
+  <action name="actionSet_as_Default_2">
    <property name="text">
-    <string>Dark</string>
+    <string>Set as Default</string>
    </property>
   </action>
-  <action name="actionMatrix">
+  <action name="actionSet_as_Default_3">
    <property name="text">
-    <string>Matrix</string>
+    <string>Set as Default</string>
    </property>
   </action>
-  <action name="actionBlack_Gold">
+  <action name="actionSet_as_Default_4">
    <property name="text">
-    <string>Black n Gold</string>s
+    <string>Set as Default</string>
    </property>
   </action>
-  <action name="actionBeach_Boi">
+  <action name="actionSet_as_Default_5">
    <property name="text">
-    <string>Beach Boi</string>
+    <string>Set as Default</string>
    </property>
   </action>
-  <action name="actionChickadee">
+  <action name="actionSet_as_Default_6">
    <property name="text">
-    <string>Chickadee</string>
+    <string>Set as Default</string>
    </property>
   </action>
-  <action name="actionPink">
+  <action name="actionSet_as_Default_7">
    <property name="text">
-    <string>Pink</string>
+    <string>Set as Default</string>
    </property>
   </action>
-  <action name="actionSlate">
+  <action name="actionSet_as_Default_8">
    <property name="text">
-    <string>Slate</string>
+    <string>Set as Default</string>
    </property>
   </action>
-  <action name="actionWheat">
+  <action name="actionSet_as_Default_9">
    <property name="text">
-    <string>Wheat</string>
+    <string>Set as Default</string>
    </property>
   </action>
-  <action name="actionSilverfox">
+  <action name="actionSet_as_Default_10">
    <property name="text">
-    <string>Silver Fox</string>
+    <string>Set as Default</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionSelect_2">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionSelect_3">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionSelect_4">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionSelect_5">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionSelect_6">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionSelect_7">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionSelect_8">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionSelect_9">
+   <property name="text">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionSelect_10">
+   <property name="text">
+    <string>Select</string>
    </property>
   </action>
  </widget>
