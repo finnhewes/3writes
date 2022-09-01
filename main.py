@@ -13,9 +13,37 @@ class MyGUI(QMainWindow):
         self.file_name_set = False
 
         self.plainTextEdit.setFont(QFont("Courier New", 16))  # default font settings
-        self.set_light_theme()  # light is the default theme
+        try:
+            with open("default_theme.txt", "r") as f:  # try to open text file that stores default theme information
+                contents = f.read()
+                if contents == "light":
+                    self.set_light_theme()
+                elif contents == "silverfox":
+                    self.set_silverfox_theme()
+                elif contents == "dark":
+                    self.set_dark_theme()
+                elif contents == "matrix":
+                    self.set_matrix_theme()
+                elif contents == "black_gold":
+                    self.set_black_gold_theme()
+                elif contents == "beach":
+                    self.set_beach_boi_theme()
+                elif contents == "chick":
+                    self.set_chick_theme()
+                elif contents == "pink":
+                    self.set_pink_theme()
+                elif contents == "slate":
+                    self.set_slate_theme()
+                elif contents == "wheat":
+                    self.set_wheat_theme()
+                else:  # if the text file says anything other than these theme names:
+                    self.set_light_theme()
+        except FileNotFoundError:  # the user has not set a default theme
+            self.set_light_theme()  # light is the system default theme
+
         self.word_count = 0 # word count starts at 0
         QMainWindow.setStatusBar(self, self.statusbar)  # generating a status bar in the window
+        self.statusbar.setFont(QFont("Courier New", 14))  # set status bar font
         self.statusbar.showMessage(f"Word Count: {self.word_count}")  # giving the status bar a purpose
         self.plainTextEdit.textChanged.connect(self.update_word_count)  #whenever the text content of the document is
         # changed [[signal generated]], update_word_count() is triggered [[slot fires]]
@@ -51,16 +79,29 @@ class MyGUI(QMainWindow):
         self.actionPaste.setShortcut(QKeySequence("Ctrl+V"))
 
         # theme menu options
-        self.actionLight.triggered.connect(self.set_light_theme)
-        self.actionDark.triggered.connect(self.set_dark_theme)
-        self.actionMatrix.triggered.connect(self.set_matrix_theme)
-        self.actionBlack_Gold.triggered.connect(self.set_black_gold_theme)
-        self.actionBeach_Boi.triggered.connect(self.set_beach_boi_theme)
-        self.actionChickadee.triggered.connect(self.set_chickadee_theme)
-        self.actionPink.triggered.connect(self.set_pink_theme)
-        self.actionSlate.triggered.connect(self.set_slate_theme)
-        self.actionWheat.triggered.connect(self.set_wheat_theme)
-        self.actionSilverfox.triggered.connect(self.set_silverfox_theme)
+        self.actionSelect.triggered.connect(self.set_light_theme)
+        self.actionSelect_2.triggered.connect(self.set_silverfox_theme)
+        self.actionSelect_3.triggered.connect(self.set_dark_theme)
+        self.actionSelect_4.triggered.connect(self.set_matrix_theme)
+        self.actionSelect_5.triggered.connect(self.set_black_gold_theme)
+        self.actionSelect_6.triggered.connect(self.set_beach_boi_theme)
+        self.actionSelect_7.triggered.connect(self.set_chickadee_theme)
+        self.actionSelect_8.triggered.connect(self.set_pink_theme)
+        self.actionSelect_9.triggered.connect(self.set_slate_theme)
+        self.actionSelect_10.triggered.connect(self.set_wheat_theme)
+
+        # set default theme actions
+        self.actionSet_as_Default.triggered.connect(lambda: self.set_default_theme("light"))
+        self.actionSet_as_Default_2.triggered.connect(lambda: self.set_default_theme("silverfox"))
+        self.actionSet_as_Default_3.triggered.connect(lambda: self.set_default_theme("dark"))
+        self.actionSet_as_Default_4.triggered.connect(lambda: self.set_default_theme("matrix"))
+        self.actionSet_as_Default_5.triggered.connect(lambda: self.set_default_theme("black_gold"))
+        self.actionSet_as_Default_6.triggered.connect(lambda: self.set_default_theme("beach"))
+        self.actionSet_as_Default_7.triggered.connect(lambda: self.set_default_theme("chick"))
+        self.actionSet_as_Default_8.triggered.connect(lambda: self.set_default_theme("pink"))
+        self.actionSet_as_Default_9.triggered.connect(lambda: self.set_default_theme("slate"))
+        self.actionSet_as_Default_10.triggered.connect(lambda: self.set_default_theme("wheat"))
+
 
     def update_word_count(self):  # function to count words in document
         text = self.plainTextEdit.toPlainText()  # text is retrieved from the document contents
@@ -166,6 +207,9 @@ class MyGUI(QMainWindow):
             event.ignore()
 
     #_______________________Themes Below__________________________#
+    def set_default_theme(self, theme: str):
+        with open("default_theme.txt", "w") as file:
+            file.write(theme)
 
     def set_light_theme(self):
         self.plainTextEdit.setStyleSheet("background-color: white;")
@@ -236,4 +280,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
